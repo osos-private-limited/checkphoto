@@ -1,0 +1,181 @@
+require("dotenv").config();
+const db = require("./models");
+const fs = require("fs-extra");
+var ffmpeg = require("fluent-ffmpeg");
+const sharp = require("sharp");
+var ffmpegPath = require("@ffmpeg-installer/ffmpeg").path;
+ffmpeg.setFfmpegPath(ffmpegPath);
+var command = ffmpeg();
+const deletePhoto = async function () {
+  try {
+    const replacePost = await db.Replace.find({ dupDeleted: false });
+    console.log("inn");
+
+    for (var replace of replacePost) {
+      //console.log(replace._id);
+
+      if (!replace.dupDeleted) {
+        if (replace.type == "post") {
+          const post1 = await db.Post.findOne({
+            _id: ObjectId(replace.postId),
+          });
+          const n = new Date();
+          const year = n.getFullYear().toString();
+          const month = n.getMonth().toString();
+          const name = year + month;
+          var date = new Date(post1.createdAt).getTime();
+          if (post1.photo.length > 0) {
+            var photo = [];
+            var i = 0;
+
+            for (var file of replace.duplicatePhotos) {
+              const filename = `user-${post1.userId}-${date}-${i + 1}.jpeg`;
+              await sharp(
+                `/home/thinclients/user5/Desktop/final/main/nodejs_project/${file.path}`,
+              )
+                .toFormat("jpeg")
+                .jpeg({ quality: 70 })
+                .toFile(
+                  `/home/thinclients/user5/Desktop/final/main/nodejs_project/public/image/post/${name}/${filename}`,
+                )
+                .catch((err) => {
+                  console.log(err);
+                });
+              var a = false;
+              photo.push(
+                `http://${process.env.IP}:${process.env.PORT}/image/post/${name}/${filename}`,
+              );
+              post1.photo = photo;
+
+              i++;
+              a = true;
+              if (a) {
+                await fs
+                  .remove(
+                    `/home/thinclients/user5/Desktop/final/main/nodejs_project/${file.path}`,
+                  )
+
+                  .catch((err) => {
+                    console.log(err);
+                  });
+              }
+            }
+          }
+
+          if (post1.video.length > 0) {
+            var video = []
+
+            for (var file of replace.video) {
+              const videofilename = `user-${post1.userId}-${date}.mp4`;
+              var b = false;
+              await ffmpeg(`/home/thinclients/user5/Desktop/final/main/nodejs_project/${file.path}`)
+                .audioCodec("libmp3lame")
+                .videoCodec("libx264")
+                // .size("640x480")
+                .size("50%")
+                .on("error", function (err) {
+                  console.log("An error occurred: " + err.message);
+                })
+                .on("end", function () {
+                  b = true;
+                  console.log("Processing finished !");
+                })
+                .save(`/home/thinclients/user5/Desktop/final/main/nodejs_project/public/image/post/${name}/${videofilename}`);
+
+              video.push(
+                `http://${process.env.IP}:${process.env.PORT}/image/post/${name}/${videofilename}`,
+              );
+
+              console.log(video)
+              post1.video = video;
+
+
+              // }
+              var removevideos = setInterval(async () => {
+                if (b) {
+                  await fs
+                    .remove(
+                      `/home/thinclients/user5/Desktop/final/main/nodejs_project/${file.path}`,
+                    ).catch((err) => {
+                      console.log(err);
+                    });
+                  post1.replaced = true;
+                  post1.save();
+                  replace.originalVideo = video;
+                  replace.originalPhoto = photo;
+                  replace.dupDeleted = true;
+                  replace.save();
+                  clearInterval(removevideos)
+
+                }
+              }, 2000)
+
+
+            }
+          }
+
+        } else {
+          console.log('subpppppppppppppppppppppppppppppost');
+
+          const post1 = await db.SubPost.findOne({
+            _id: ObjectId(replace.postId),
+          });
+          const n = new Date();
+          const year = n.getFullYear().toString();
+          const month = n.getMonth().toString();
+          const name = year + month;
+          var date = new Date(post1.createdAt).getTime();
+          if (post1.photo.length > 0) {
+            var photo = [];
+            var i = 0;
+
+            for (var file of replace.duplicatePhotos) {
+              const filename = `user-${post1.userId}-${date}-${i + 1}.jpeg`;
+              await sharp(
+                `/home/thinclients/user5/Desktop/final/main/nodejs_project/${file.path}`,
+              )
+                .toFormat("jpeg")
+                .jpeg({ quality: 70 })
+                .toFile(
+                  `/home/thinclients/user5/Desktop/final/main/nodejs_project/public/image/post/${name}/${filename}`,
+                )
+                .catch((err) => {
+                  console.log(err);
+                });
+              var a = false;
+              photo.push(
+                `http://${process.env.IP}:${process.env.PORT}/image/post/${name}/${filename}`,
+              );
+              post1.photo = photo;
+
+              i++;
+              a = true;
+              if (a) {
+                await fs
+                  .remove(
+                    `/home/thinclients/user5/Desktop/final/main/nodejs_project/${file.path}`,
+                  )
+
+                  .catch((err) => {
+                    console.log(err);
+                  });
+              }
+            }
+          }
+          post1.replaced = true;
+          post1.save();
+          replace.originalVideo = video;
+          replace.originalPhoto = photo;
+          replace.dupDeleted = true;
+          replace.save();
+        }
+      }
+    }
+  } catch (err) {
+    console.log(err.stack.split("\n")[0]);
+    console.log(err.stack.split("\n")[1]);
+    console.log("------------------------------------------------>");
+  }
+};
+//
+module.exports = deletePhoto;
