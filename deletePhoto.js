@@ -24,35 +24,36 @@ const deletePhoto = async function () {
           const month = n.getMonth().toString();
           const name = year + month;
           var date = new Date(post1.createdAt).getTime();
+          var photo = [];
           if (post1.photo.length > 0) {
-            var photo = [];
+
             var i = 0;
 
             for (var file of replace.duplicatePhotos) {
               const filename = `user-${post1.userId}-${date}-${i + 1}.jpeg`;
               await sharp(
-                `/home/thinclients/user5/Desktop/final/main/nodejs_project/${file.path}`,
+                `${file.path}`,
               )
                 .toFormat("jpeg")
                 .jpeg({ quality: 70 })
                 .toFile(
-                  `/home/thinclients/user5/Desktop/final/main/nodejs_project/public/image/post/${name}/${filename}`,
+                  `public/image/post/${name}/${filename}`,
                 )
                 .catch((err) => {
                   console.log(err);
                 });
               var a = false;
               photo.push(
-                `http://${process.env.IP}:${process.env.PORT}/image/post/${name}/${filename}`,
+                `https://static-content.spaarksweb.com/image/post/${name}/${filename}`,
               );
-              post1.photo = photo;
+
 
               i++;
               a = true;
               if (a) {
                 await fs
                   .remove(
-                    `/home/thinclients/user5/Desktop/final/main/nodejs_project/${file.path}`,
+                    `${file.path}`,
                   )
 
                   .catch((err) => {
@@ -68,7 +69,7 @@ const deletePhoto = async function () {
             for (var file of replace.video) {
               const videofilename = `user-${post1.userId}-${date}.mp4`;
               var b = false;
-              await ffmpeg(`/home/thinclients/user5/Desktop/final/main/nodejs_project/${file.path}`)
+              await ffmpeg(`${file.path}`)
                 .audioCodec("libmp3lame")
                 .videoCodec("libx264")
                 // .size("640x480")
@@ -80,10 +81,10 @@ const deletePhoto = async function () {
                   b = true;
                   console.log("Processing finished !");
                 })
-                .save(`/home/thinclients/user5/Desktop/final/main/nodejs_project/public/image/post/${name}/${videofilename}`);
+                .save(`public/image/post/${name}/${videofilename}`);
 
               video.push(
-                `http://${process.env.IP}:${process.env.PORT}/image/post/${name}/${videofilename}`,
+                `https://static-content.spaarksweb.com/image/post/${name}/${videofilename}`,
               );
 
               console.log(video)
@@ -95,12 +96,12 @@ const deletePhoto = async function () {
                 if (b) {
                   await fs
                     .remove(
-                      `/home/thinclients/user5/Desktop/final/main/nodejs_project/${file.path}`,
+                      `${file.path}`,
                     ).catch((err) => {
                       console.log(err);
                     });
                   post1.replaced = true;
-                  post1.save();
+
                   replace.originalVideo = video;
                   replace.originalPhoto = photo;
                   replace.dupDeleted = true;
@@ -113,7 +114,11 @@ const deletePhoto = async function () {
 
             }
           }
-
+          post1.photo = photo;
+          post1.replaced = true;
+          post1.save()
+          replace.dupDeleted = true;
+          replace.save();
         } else {
           console.log('subpppppppppppppppppppppppppppppost');
 
@@ -132,19 +137,19 @@ const deletePhoto = async function () {
             for (var file of replace.duplicatePhotos) {
               const filename = `user-${post1.userId}-${date}-${i + 1}.jpeg`;
               await sharp(
-                `/home/thinclients/user5/Desktop/final/main/nodejs_project/${file.path}`,
+                `${file.path}`,
               )
                 .toFormat("jpeg")
                 .jpeg({ quality: 70 })
                 .toFile(
-                  `/home/thinclients/user5/Desktop/final/main/nodejs_project/public/image/post/${name}/${filename}`,
+                  `public/image/post/${name}/${filename}`,
                 )
                 .catch((err) => {
                   console.log(err);
                 });
               var a = false;
               photo.push(
-                `http://${process.env.IP}:${process.env.PORT}/image/post/${name}/${filename}`,
+                `https://static-content.spaarksweb.com/image/post/${name}/${filename}`,
               );
               post1.photo = photo;
 
@@ -153,7 +158,7 @@ const deletePhoto = async function () {
               if (a) {
                 await fs
                   .remove(
-                    `/home/thinclients/user5/Desktop/final/main/nodejs_project/${file.path}`,
+                    `${file.path}`,
                   )
 
                   .catch((err) => {

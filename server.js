@@ -463,7 +463,7 @@ app.get("/getmapdata/:z/:x/:y", protect, async function (req, res) {
     res.setHeader("Content-Type", "image/png");
     const options = {
       method: "GET",
-      uri: `http://192.168.0.254:8088/styles/osos/${req.params.z}/${req.params.x}/${req.params.y}`,
+      uri: `https://maps.spaarksweb.com/styles/osos/?raster#${req.params.z}/${req.params.x}/${req.params.y}`,
       headers: {
         Accept: "image/png",
       },

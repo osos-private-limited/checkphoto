@@ -9,7 +9,7 @@ const app = express();
 app.set("view engine", "ejs");
 
 const checkPhoto = async function () {
-  const mine = `http://192.168.0.254:3010/image/image-not-available.png`;
+  const mine = `https://api.spaarksweb.com/image/image-not-available.png`;
   const data = await db.Replace.find({ status: "ongoing", dupDeleted: true });
 
   if (data.length) {
