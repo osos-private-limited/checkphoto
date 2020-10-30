@@ -468,6 +468,7 @@ app.get("/getmapdata/:z/:x/:y", protect, async function (req, res) {
         Accept: "image/png",
       },
     };
+    console.log(options.uri)
     request(options.uri, options).pipe(res);
   } catch (err) {
     console.log(err);
