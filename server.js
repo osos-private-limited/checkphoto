@@ -31,7 +31,7 @@ const app = express();
 const checkPhoto = require("./checkPhoto");
 const deleteDuplicatePhoto = require("./deletePhoto");
 app.set("view engine", "ejs");
-
+app.use(express.static(`${__dirname}/public`));
 // app.use(morgan("dev"));
 app.use(cors());
 app.use(helmet());
@@ -463,7 +463,7 @@ app.get("/getmapdata/:z/:x/:y", protect, async function (req, res) {
     res.setHeader("Content-Type", "image/png");
     const options = {
       method: "GET",
-      uri: `https://maps.spaarksweb.com/styles/osos/?raster#${req.params.z}/${req.params.x}/${req.params.y}`,
+      uri: `http://43.254.41.110:3000/styles/osos/{req.params.z}/${req.params.x}/${req.params.y}`,
       headers: {
         Accept: "image/png",
       },
