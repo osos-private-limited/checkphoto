@@ -480,7 +480,7 @@ app.get("/demo", async (req, res) => {
   res.json({ message: a.getTime() });
 });
 load_model().then(() => {
-  app.listen(3011, () => {
+  app.listen(3011,'0.0.0.0' () => {
     console.log("connection succesfull");
   });
 });
