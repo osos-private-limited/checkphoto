@@ -463,7 +463,7 @@ app.get("/getmapdata/:z/:x/:y", protect, async function (req, res) {
     res.setHeader("Content-Type", "image/png");
     const options = {
       method: "GET",
-      uri: `http://43.254.41.110:3000/styles/osos/{req.params.z}/${req.params.x}/${req.params.y}`,
+      uri: `http://43.254.41.110:3000/styles/osos/${req.params.z}/${req.params.x}/${req.params.y}`,
       headers: {
         Accept: "image/png",
       },
