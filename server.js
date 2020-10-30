@@ -366,7 +366,7 @@ const protect = async (req, res, next) => {
       if (!token) {
         return next(
           new AppError(
-            "You are not logged in! Please log in to get access.",
+            "You are not logged in! Please log in to get accesss.",
             401,
           ),
         );
