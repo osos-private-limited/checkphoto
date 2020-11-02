@@ -52,7 +52,7 @@ async function photos(photo, post, mine) {
 async function check(pics) {
 
   var responsess = [];
-  console.log(pics);
+  //console.log(pics);
   var pic = await axios.get(`${pics}`, {
     responseType: "arraybuffer",
   });
