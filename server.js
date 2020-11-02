@@ -296,7 +296,7 @@ agenda.on("ready", function () {
   agenda.every("24 hours", "addtwo");
 });
 
-cron.schedule("* * * * Monday", function () {
+cron.schedule("0 8 * * Monday", function () {
   cmd.run([
     `rm -r /home/thinclients/user5/Desktop/db_backup/cloud`,
     `mongodump -d cloud -o /home/thinclients/user5/Desktop/db_backup/`,
