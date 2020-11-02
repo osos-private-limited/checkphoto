@@ -118,6 +118,7 @@ const deletePhoto = async function () {
           post1.replaced = true;
           post1.save()
           replace.dupDeleted = true;
+          replace.originalPhoto=photo;
           replace.save();
         } else {
           console.log('subpppppppppppppppppppppppppppppost');
