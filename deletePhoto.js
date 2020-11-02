@@ -53,7 +53,7 @@ const deletePhoto = async function () {
               if (a) {
                 await fs
                   .remove(
-                    `/var/lib/jenkins/workspace/checkphoto/${file.path}`,
+                    `${file.path}`,
                   )
 
                   .catch((err) => {
@@ -96,7 +96,7 @@ const deletePhoto = async function () {
                 if (b) {
                   await fs
                     .remove(
-                      `/var/lib/jenkins/workspace/checkphoto/${file.path}`,
+                      `${file.path}`,
                     ).catch((err) => {
                       console.log(err);
                     });
