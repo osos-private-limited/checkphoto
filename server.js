@@ -66,81 +66,86 @@ agenda.define(
         }
       },
     );
-    await db.User.updateMany(
-      { "unsafe.expiresAt": { $lte: Date.now() } },
-      { "unsafe.freePosts": 2 },
-      function (err, res, callback) {
-        if (err) {
-          callback(err, null);
-        }
-      },
-    );
-    await db.User.updateMany(
-      { "greet.expiresAt": { $lte: Date.now() } },
-      { "greet.freePosts": 2 },
-      function (err, res, callback) {
-        if (err) {
-          callback(err, null);
-        }
-      },
-    );
-    await db.User.updateMany(
-      { "market.expiresAt": { $lte: Date.now() } },
-      { "market.freePosts": 8 },
-      function (err, res, callback) {
-        if (err) {
-          callback(err, null);
-        }
-      },
-    );
-    await db.User.updateMany(
-      { "deposit.expiresAt": { $lte: Date.now() } },
-      { "deposit.freePosts": 1 },
-      function (err, res, callback) {
-        if (err) {
-          callback(err, null);
-        }
-      },
-    );
-    await db.User.updateMany(
-      { "ambulance.expiresAt": { $lte: Date.now() } },
-      { "ambulance.freePosts": 2 },
-      function (err, res, callback) {
-        if (err) {
-          callback(err, null);
-        }
-      },
-    );
-    await db.User.updateMany(
-      { "showtime.expiresAt": { $lte: Date.now() } },
-      { "showtime.freePosts": 1 },
-      function (err, res, callback) {
-        if (err) {
-          callback(err, null);
-        }
-      },
-    );
-    await db.User.updateMany(
-      { "pepole.expiresAt": { $lte: Date.now() } },
-      { "people.freePosts": 2 },
-      function (err, res, callback) {
-        if (err) {
-          callback(err, null);
-        }
-      },
-    );
-    await db.User.updateMany(
-      { "unsafe.expiresAt": { $lte: Date.now() } },
-      { "unsafe.freePosts": 2 },
-      function (err, res, callback) {
-        if (err) {
-          callback(err, null);
-        }
-      },
-    );
+    // await db.User.updateMany(
+    //   { "unsafe.expiresAt": { $lte: Date.now() } },
+    //   { "unsafe.freePosts": 2 },
+    //   function (err, res, callback) {
+    //     if (err) {
+    //       callback(err, null);
+    //     }
+    //   },
+    // );
+    // await db.User.updateMany(
+    //   { "greet.expiresAt": { $lte: Date.now() } },
+    //   { "greet.freePosts": 2 },
+    //   function (err, res, callback) {
+    //     if (err) {
+    //       callback(err, null);
+    //     }
+    //   },
+    // );
+    // await db.User.updateMany(
+    //   { "market.expiresAt": { $lte: Date.now() } },
+    //   { "market.freePosts": 8 },
+    //   function (err, res, callback) {
+    //     if (err) {
+    //       callback(err, null);
+    //     }
+    //   },
+    // );
+    // await db.User.updateMany(
+    //   { "deposit.expiresAt": { $lte: Date.now() } },
+    //   { "deposit.freePosts": 1 },
+    //   function (err, res, callback) {
+    //     if (err) {
+    //       callback(err, null);
+    //     }
+    //   },
+    // );
+    // await db.User.updateMany(
+    //   { "ambulance.expiresAt": { $lte: Date.now() } },
+    //   { "ambulance.freePosts": 2 },
+    //   function (err, res, callback) {
+    //     if (err) {
+    //       callback(err, null);
+    //     }
+    //   },
+    // );
+    // await db.User.updateMany(
+    //   { "showtime.expiresAt": { $lte: Date.now() } },
+    //   { "showtime.freePosts": 1 },
+    //   function (err, res, callback) {
+    //     if (err) {
+    //       callback(err, null);
+    //     }
+    //   },
+    // );
+    // await db.User.updateMany(
+    //   { "pepole.expiresAt": { $lte: Date.now() } },
+    //   { "people.freePosts": 2 },
+    //   function (err, res, callback) {
+    //     if (err) {
+    //       callback(err, null);
+    //     }
+    //   },
+    // );
+    // await db.User.updateMany(
+    //   { "unsafe.expiresAt": { $lte: Date.now() } },
+    //   { "unsafe.freePosts": 2 },
+    //   function (err, res, callback) {
+    //     if (err) {
+    //       callback(err, null);
+    //     }
+    //   },
+    // );
     await db.User.updateMany(
       {},
       { $pull: { "greet.package": { expiresAt: { $lte: Date.now() } } } },
+      { multi: true },
+    );
+    await db.User.updateMany(
+      {},
+      { $pull: { "market.activeInfosasSeller": { expiresAt: { $lte: Date.now() } } } },
       { multi: true },
     );
     await db.User.updateMany(
@@ -481,7 +486,7 @@ app.get("/demo", async (req, res) => {
   res.json({ message: a.getTime() });
 });
 load_model().then(() => {
-  app.listen(3011,'0.0.0.0', () => {
+  app.listen(3011, '0.0.0.0', () => {
     console.log("connection succesfull");
   });
 });
