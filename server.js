@@ -226,7 +226,7 @@ agenda.define("addtwo", { priority: "high", concurrency: 1 }, async function (
 ) {
   db.User.updateMany(
     {},
-    { "report.Post": "2", "report.SubPost": "2", "report.Comment": "2" },
+    {"unsafe.freePosts": 2, "ambulance.freePosts": 2 },
     function (err, res, callback) {
       if (err) {
         callback(err, null);
@@ -234,7 +234,7 @@ agenda.define("addtwo", { priority: "high", concurrency: 1 }, async function (
     },
   );
   const date = new Date();
-  date.setDate(date.getDate() - 30);
+  date.setDate(date.getDate() - 90);
   const a = new Date(date);
   const data = await db.Post.find(
     {
