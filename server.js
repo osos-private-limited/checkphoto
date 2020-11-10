@@ -290,13 +290,13 @@ agenda.define("addtwo", { priority: "high", concurrency: 1 }, async function (
 });
 
 
-agenda.define("checkPhoto", { priority: "high", concurrency: 1 }, function (
-  job,
-  done,
-) {
-  checkPhoto();
-  done();
-});
+// agenda.define("checkPhoto", { priority: "high", concurrency: 1 }, function (
+//   job,
+//   done,
+// ) {
+//   checkPhoto();
+//   done();
+// });
 
 agenda.define(
   "deletedDuplicate",
