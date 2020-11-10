@@ -6,14 +6,14 @@ const sharp = require("sharp");
 var ffmpegPath = require("@ffmpeg-installer/ffmpeg").path;
 ffmpeg.setFfmpegPath(ffmpegPath);
 var command = ffmpeg();
+const Sentry = require("@sentry/node");
+
 const deletePhoto = async function () {
   try {
     const replacePost = await db.Replace.find({ dupDeleted: false });
     console.log("inn");
-
     for (var replace of replacePost) {
       //console.log(replace._id);
-
       if (!replace.dupDeleted) {
         if (replace.type == "post") {
           const post1 = await db.Post.findOne({
@@ -111,14 +111,13 @@ const deletePhoto = async function () {
                 }
               }, 2000)
 
-
             }
           }
           post1.photo = photo;
           post1.replaced = true;
           post1.save()
           replace.dupDeleted = true;
-          replace.originalPhoto=photo;
+          replace.originalPhoto = photo;
           replace.save();
         } else {
           console.log('subpppppppppppppppppppppppppppppost');
@@ -179,6 +178,7 @@ const deletePhoto = async function () {
     }
   } catch (err) {
     console.log(err.stack.split("\n")[0]);
+    Sentry.captureException(err); console.log(err.stack.split('\n')[1]);
     console.log(err.stack.split("\n")[1]);
     console.log("------------------------------------------------>");
   }

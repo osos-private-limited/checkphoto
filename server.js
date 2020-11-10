@@ -17,7 +17,20 @@ const Agenda = require("agenda");
 var Agendash = require("agendash2");
 
 var spawn = require("child_process").spawn;
+const Sentry = require("@sentry/node");
 
+Sentry.init({
+  dsn: "https://fb01474a091247e89364a9ea0ea80fe9@o471689.ingest.sentry.io/5504019",
+
+  // We recommend adjusting this value in production, or using tracesSampler
+  // for finer control
+  tracesSampleRate: 1.0,
+});
+
+const transaction = Sentry.startTransaction({
+  op: "test",
+  name: "My First Test Transaction",
+});
 //db.collection("agendaJobs").drop();
 // var wstream = fs.createWriteStream(
 //   "/home/thinclients/user5/Desktop/db_backup/sqlBackup/backup.sql",
@@ -226,7 +239,7 @@ agenda.define("addtwo", { priority: "high", concurrency: 1 }, async function (
 ) {
   db.User.updateMany(
     {},
-    {"unsafe.freePosts": 2, "ambulance.freePosts": 2 },
+    { "unsafe.freePosts": 2, "ambulance.freePosts": 2 },
     function (err, res, callback) {
       if (err) {
         callback(err, null);
@@ -275,6 +288,8 @@ agenda.define("addtwo", { priority: "high", concurrency: 1 }, async function (
   }
   done();
 });
+
+
 agenda.define("checkPhoto", { priority: "high", concurrency: 1 }, function (
   job,
   done,
@@ -296,7 +311,7 @@ agenda.on("ready", function () {
   agenda.start();
   agenda.every("one minute", "deletedDuplicate");
   agenda.every("one minute", "checkRange");
-  agenda.every("one minute", "checkPhoto");
+  //agenda.every("one minute", "checkPhoto");
   agenda.every("one minute", "expirePost");
   agenda.every("24 hours", "addtwo");
 });

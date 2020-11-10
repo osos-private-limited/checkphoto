@@ -287,14 +287,14 @@ agenda.define(
     },
 );
 
-agenda.on("ready", function () {
-    agenda.start();
-    agenda.every("one minute", "deletedDuplicate");
-    agenda.every("one minute", "checkRange");
-    agenda.every("one minute", "checkPhoto");
-    agenda.every("one minute", "expirePost");
-    agenda.every("24 hours", "addtwo");
-});
+// agenda.on("ready", function () {
+//     agenda.start();
+//     agenda.every("one minute", "deletedDuplicate");
+//     agenda.every("one minute", "checkRange");
+//     agenda.every("one minute", "checkPhoto");
+//     agenda.every("one minute", "expirePost");
+//     agenda.every("24 hours", "addtwo");
+// });
 
 cron.schedule("0 8 * * Monday", function () {
     cmd.run([

@@ -6,6 +6,7 @@ const jpeg = require("jpeg-js");
 const express = require("express");
 const sharp = require("sharp");
 const app = express();
+const Sentry = require("@sentry/node");
 app.set("view engine", "ejs");
 
 const checkPhoto = async function () {
