@@ -309,8 +309,8 @@ agenda.define(
 
 agenda.on("ready", function () {
   agenda.start();
-  agenda.every("one minute", "deletedDuplicate");
-  agenda.every("one minute", "checkRange");
+  agenda.every("5 minutes", "deletedDuplicate");
+  agenda.every("15 minutes", "checkRange");
   //agenda.every("one minute", "checkPhoto");
   agenda.every("one minute", "expirePost");
   agenda.every("24 hours", "addtwo");
