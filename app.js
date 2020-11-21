@@ -8,7 +8,7 @@ const tf = require("@tensorflow/tfjs-node");
 const ngrok = require("ngrok");
 const redis = require("redis");
 const client = redis.createClient();
-
+var cookieParser = require('cookie-parser');
 const nsfw = require("nsfwjs");
 const jpeg = require("jpeg-js");
 const cmd = require("node-run-cmd");
@@ -22,6 +22,7 @@ var spawn = require("child_process").spawn;
 // var wstream = fs.createWriteStream(
 //   "/home/thinclients/user5/Desktop/db_backup/sqlBackup/backup.sql",
 // );
+var path = require('path');
 const cors = require("cors");
 const helmet = require("helmet");
 const morgan = require("morgan");
@@ -30,12 +31,20 @@ const app = express();
 
 const checkPhoto = require("./checkPhoto");
 const deleteDuplicatePhoto = require("./deletePhoto");
-app.set("view engine", "ejs");
-app.use(express.static(`${__dirname}/public`));
-// app.use(morgan("dev"));
+
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
+
 app.use(cors());
 app.use(helmet());
 app.use(compression());
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
 ObjectId = require("mongodb").ObjectID;
 const mongoString = `mongodb://127.0.0.1:27017/cloud?retryWrites=true&w=majority`;
 const load_model = async () => {
@@ -498,6 +507,21 @@ app.get("/demo", async (req, res) => {
     const a = new Date();
     //var date = new Date(post1.createdAt).getTime();
     res.json({ message: a.getTime() });
+});
+
+
+app.get('/share', async (req, res) => {
+    // const data = await db.Share.findOne({ uuid: req.params.id });
+    // if (data) {
+    // console.log(req.params.id)
+    // const post = await db.Post.findOne({
+    //     _id: req.params.id
+    // });
+    return res.render('shared');
+    // } else {
+    //     return res.redirect('https://www.spaarksweb.com')
+    // }
+
 });
 load_model().then(() => {
     app.listen(3012, '0.0.0.0', () => {

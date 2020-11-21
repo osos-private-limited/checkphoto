@@ -1,0 +1,40 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="<%=post.content%>">
+    <meta name="keywords" content="<%=post.content%>">
+    <meta name="author" content="<%=post.uservisibility.name%>">
+    <meta property="og:title" content="<%=post.uservisibility.name%>" />
+    <meta property="og:description" content="<%=post.content%>" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta http-equiv="refresh" content="https://www.spaarksweb.com/#/share/<%=uuid%>" />
+
+
+    <meta name="twitter:card" content="<%=post.content%>" />
+    <meta name="twitter:site" content="Spaarks" />
+    <meta name="twitter:title" content="<%=post.uservisibility.name%>" />
+    <meta name="twitter:image" content="<%=post.photo[0]%>" />
+    <meta name="twitter:description" content="<%=post.content%>" />
+
+    <meta property="og:site_name" content="Spaarks">
+    <meta property="og:title" content="<%=post.uservisibility.name%>" />
+    <meta property="og:description" content="<%=post.content%>" />
+    <meta property="og:image" content="<%=post.photo[0]%>">
+    <meta property="og:type" content="website" />
+    <meta property="og:updated_time" content="1440432930" />
+</head>
+
+<body>
+    <%=post.content%>
+ 
+</body>
+   <script type="text/javascript">
+        alert("a")
+        window.onload = function () {
+
+            window.location.href = "https://www.spaarksweb.com/#/share/<%=uuid%>"
+        }
+    </script>
+</html>

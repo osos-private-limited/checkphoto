@@ -230,6 +230,16 @@ agenda.define(
       var packages = JSON.stringify(packagess);
       client.set(`${user._id}-Payment`, packages, redis.print);
     }
+    var orderss = await db.Order.find({ status: "processing" })
+    for (var order of orderss) {
+      dt1 = new Date();
+      dt2 = order.createdAt
+      var difference = diff_minutes(dt1, dt2)
+      if (difference > 15) {
+        order.status = "failed"
+      }
+      order.save()
+    }
     done();
   },
 );
@@ -500,6 +510,15 @@ app.get("/demo", async (req, res) => {
   //var date = new Date(post1.createdAt).getTime();
   res.json({ message: a.getTime() });
 });
+
+function diff_minutes(dt2, dt1) {
+
+  var diff = (dt2.getTime() - dt1.getTime()) / 1000;
+  diff /= 60;
+  return Math.abs(Math.round(diff));
+
+}
+
 load_model().then(() => {
   app.listen(3011, '0.0.0.0', () => {
     console.log("connection succesfull");
