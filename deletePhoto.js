@@ -105,7 +105,7 @@ const deletePhoto = async function () {
                   replace.originalVideo = video;
                   replace.originalPhoto = photo;
                   replace.dupDeleted = true;
-                  replace.save();
+
                   clearInterval(removevideos)
 
                 }
