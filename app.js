@@ -357,6 +357,9 @@ app.get('/emr/:emergency', async function (req, res) {
         return res.status(500).json({ data: err });
     }
 });
+
+
+
 app.get("/compress", async (req, res) => {
     ffmpeg(`./demo.mp4`)
         .audioCodec("libmp3lame")

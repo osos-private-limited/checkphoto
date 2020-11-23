@@ -504,13 +504,17 @@ app.get("/getmapdata/:z/:x/:y", protect, async function (req, res) {
     console.log(err);
   }
 });
-app.get("/demo", async (req, res) => {
-  //user-5f4f7a604ef4ef2d3cd3d412-1600517023753-1.jpeg
-  const a = new Date();
-  //var date = new Date(post1.createdAt).getTime();
-  res.json({ message: a.getTime() });
-});
+app.get("/postedAt", async (req, res) => {
 
+  var posts = await db.Post.find({})
+  for (var post of posts) {
+    if (!post.postedAt) {
+      post.postedAt = post.updatedAt
+      post.save();
+    }
+  }
+  res.json({ message: "updated successfully" })
+})
 function diff_minutes(dt2, dt1) {
 
   var diff = (dt2.getTime() - dt1.getTime()) / 1000;
