@@ -143,6 +143,8 @@ const PostSchema = new Schema(
         type: [Number],
       },
     },
+    postedAt: { type: Date },
+
     locationName: { type: String },
     depositOption: { type: String },
     depositCategory: { type: String },
