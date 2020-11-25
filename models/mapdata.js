@@ -6,6 +6,7 @@ const MapData = new mongoose.Schema({
         longitude: { type: Number },
         image: { type: String },
         imageSize: { type: Number },
+        pop: { type: Boolean, default: false }
     }],
     active: { type: Boolean, default: false },
     eventImage: { type: String },
