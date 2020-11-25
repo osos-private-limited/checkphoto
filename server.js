@@ -490,10 +490,15 @@ function checkTokenExists(user, token) {
 const request = require("request-promise");
 app.get("/getmapdata/:z/:x/:y", protect, async function (req, res) {
   try {
+    var mapname = "osos";
+    var a = await db.MapData.findOne({ active: true });
+    if (a) {
+      mapname = a.mapName;
+    }
     res.setHeader("Content-Type", "image/png");
     const options = {
       method: "GET",
-      uri: `http://43.254.41.110:3000/styles/osos/${req.params.z}/${req.params.x}/${req.params.y}`,
+      uri: `http://43.254.41.110:3000/styles/${mapname}/${req.params.z}/${req.params.x}/${req.params.y}`,
       headers: {
         Accept: "image/png",
       },

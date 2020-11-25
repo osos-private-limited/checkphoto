@@ -44,3 +44,4 @@ module.exports.Employee = require("./employeeModel");
 module.exports.Apptour = require("./appTourModel");
 module.exports.Message = require("./emergencymessage");
 module.exports.Admin = require("./adminModel");
+module.exports.MapData = require("./mapdata");

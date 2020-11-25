@@ -85,6 +85,15 @@ agenda.define(
             },
         );
         await db.User.updateMany(
+            { "ambulance.expiresAt": { $lte: Date.now() } },
+            { "ambulance.freePosts": 2 },
+            function (err, res, callback) {
+                if (err) {
+                    callback(err, null);
+                }
+            },
+        );
+        await db.User.updateMany(
             { "greet.expiresAt": { $lte: Date.now() } },
             { "greet.freePosts": 2 },
             function (err, res, callback) {
@@ -111,15 +120,7 @@ agenda.define(
                 }
             },
         );
-        await db.User.updateMany(
-            { "ambulance.expiresAt": { $lte: Date.now() } },
-            { "ambulance.freePosts": 2 },
-            function (err, res, callback) {
-                if (err) {
-                    callback(err, null);
-                }
-            },
-        );
+
         await db.User.updateMany(
             { "showtime.expiresAt": { $lte: Date.now() } },
             { "showtime.freePosts": 1 },
