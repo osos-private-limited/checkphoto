@@ -492,6 +492,7 @@ app.get("/getmapdata/:z/:x/:y", protect, async function (req, res) {
   try {
     var mapname = "osos";
     var a = await db.MapData.findOne({ active: true });
+    var b = "D"
     if (a) {
       mapname = a.mapName;
     }
