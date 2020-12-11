@@ -46,7 +46,7 @@ app.use(compression());
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 ObjectId = require("mongodb").ObjectID;
-const mongoString = `mongodb://127.0.0.1:27017/cloud?retryWrites=true&w=majority`;
+const mongoString = `mongodb://adminosos:admin7981262020@127.0.0.1:27017/cloud`;
 const load_model = async () => {
     _model = await nsfw.load();
 };
