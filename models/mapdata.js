@@ -16,4 +16,4 @@ const MapData = new mongoose.Schema({
 
 const MapICons = mongoose.model('MapData', MapData);
 
-module.exports = MapICons;
+module.exports = MapICons; 

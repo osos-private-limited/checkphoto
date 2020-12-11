@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 mongoose.Promise = Promise;
 //mongodb+srv://osos:${process.env.DBPASSWORD}@ososdb-5wqhs.mongodb.net
 mongoose.connect(
-  `mongodb://127.0.0.1:27017/cloud?retryWrites=true&w=majority`,
+  `mongodb://adminosos:admin7981262020@127.0.0.1:27017/cloud`,
   {
     useNewUrlParser: true,
     useCreateIndex: true,
