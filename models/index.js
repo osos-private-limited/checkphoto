@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 mongoose.Promise = Promise;
 //mongodb+srv://osos:${process.env.DBPASSWORD}@ososdb-5wqhs.mongodb.net
 mongoose.connect(
-  `mongodb://adminosos:admin7981262020@127.0.0.1:27017/cloud`,
+  `mongodb://adminosos:admin7981262020@43.254.41.107:27017/cloud?authSource=cloud&replicaSet=rs0&readPreference=primary&appname=MongoDB%20Compass&ssl=false`,
   {
     useNewUrlParser: true,
     useCreateIndex: true,
