@@ -84,7 +84,7 @@ const deletePhoto = async function () {
                 .save(`public/image/post/${name}/${videofilename}`);
 
               video.push(
-                `https://static-content.spaarksweb.com/image/post/${name}/${videofilename}`,
+                `${process.env.HEADER}/image/post/${name}/${videofilename}`,
               );
 
               console.log(video)
@@ -149,7 +149,7 @@ const deletePhoto = async function () {
                 });
               var a = false;
               photo.push(
-                `https://static-content.spaarksweb.com/image/post/${name}/${filename}`,
+                `${process.env.HEADER}/image/post/${name}/${filename}`,
               );
               post1.photo = photo;
 

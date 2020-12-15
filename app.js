@@ -46,7 +46,7 @@ app.use(compression());
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 ObjectId = require("mongodb").ObjectID;
-const mongoString = `mongodb://adminosos:admin7981262020@43.254.41.107:27017/cloud?authSource=cloud&replicaSet=rs0&readPreference=primary&appname=MongoDB%20Compass&ssl=false`;
+const mongoString = process.env.URI;
 const load_model = async () => {
     _model = await nsfw.load();
 };
@@ -528,7 +528,7 @@ app.get('/share', async (req, res) => {
 
 });
 load_model().then(() => {
-    app.listen(3012, '0.0.0.0', () => {
+    app.listen(process.env.PORT, '0.0.0.0', () => {
         console.log("connection succesfull");
     });
 });
